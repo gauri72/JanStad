@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./Header";
 import Footer from "./Footer";
+import CustomCursor from "./components/CustomCursor";
+import { AnimatePresence } from "framer-motion";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,10 +31,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased cursor-none`}
       >
+        <CustomCursor />
         <Header />
-        {children}
+        <AnimatePresence mode="wait">
+          {children}
+        </AnimatePresence>
         <Footer />
       </body>
     </html>

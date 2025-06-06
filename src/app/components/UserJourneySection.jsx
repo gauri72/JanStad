@@ -1,26 +1,35 @@
 'use client';
 
 import React, { useRef } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
-import { AnimatedBackground } from 'animated-backgrounds';
+import { motion, useInView } from "framer-motion";
+import { 
+  RiUserAddLine,
+  RiSearchLine,
+  RiTeamLine,
+  RiCheckboxCircleLine
+} from 'react-icons/ri';
 
 const steps = [
   {
     title: "Join the Platform",
     description: "Create your profile and connect with your local community.",
+    icon: <RiUserAddLine className="text-4xl text-gray-800" aria-hidden="true" />
   },
   {
     title: "Identify Your Challenges",
     description: "Browse resources for administrative help or join discussions on local issues.",
+    icon: <RiSearchLine className="text-4xl text-gray-800" aria-hidden="true" />
   },
   {
     title: "Engage & Contribute",
     description: "Share your experiences, vote on initiatives, or organize community actions.",
+    icon: <RiTeamLine className="text-4xl text-gray-800" aria-hidden="true" />
   },
   {
     title: "Create Real Change",
     description: "See the impact of collective action in your neighborhood and city.",
-  },
+    icon: <RiCheckboxCircleLine className="text-4xl text-gray-800" aria-hidden="true" />
+  }
 ];
 
 const textVariants = {
@@ -48,64 +57,64 @@ const cardVariants = {
   })
 };
 
-const buttonVariants = {
-  hover: { scale: 1.08, boxShadow: '0 8px 32px 0 rgba(255,140,0,0.25)' },
-  tap: { scale: 0.97 },
-};
+function JourneyCard({ icon, title, description, index }) {
+  return (
+    <motion.div
+      whileHover={{ 
+        scale: 1.05,
+        boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+      }}
+      className="flex flex-col items-center bg-white rounded-xl shadow-md p-8 transition-all duration-300 hover:shadow-xl border border-gray-100 h-[320px]"
+    >
+      <motion.div 
+        initial={{ scale: 0, rotate: -180 }}
+        whileInView={{ scale: 1, rotate: 0 }}
+        transition={{
+          type: "spring",
+          stiffness: 260,
+          damping: 20,
+          delay: 0.2
+        }}
+        className="mb-6"
+      >
+        {icon}
+      </motion.div>
+      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#E67E22] text-white text-sm font-bold mb-6">
+        {index + 1}
+      </div>
+      <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">{title}</h3>
+      <p className="text-gray-600 text-center flex-grow">{description}</p>
+    </motion.div>
+  );
+}
 
 export default function UserJourneySection() {
   const ref = useRef(null);
   const inView = useInView(ref, { margin: "-100px" });
 
-  // Configuration for the animated background
-  const backgroundConfig = {
-    animationName: 'particleNetwork',
-    style: { 
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      opacity: 0.3,
-      zIndex: 0
-    },
-    config: {
-      particleColor: '#808080',
-      backgroundColor: 'transparent',
-      particleCount: 50,
-      particleSize: 3,
-      lineColor: '#808080',
-      lineWidth: 1,
-      speed: 1
-    }
-  };
-
   return (
-    <section
+    <motion.section
       ref={ref}
-      className="w-full bg-[#F5F5F5] min-h-screen py-16 px-4 flex flex-col items-center justify-center border-[10px] border-black relative overflow-hidden"
+      initial={{ opacity: 0, y: 60 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="w-full h-screen bg-white py-16 px-4 flex flex-col items-center justify-center relative overflow-hidden"
       id="user-journey"
       aria-labelledby="user-journey-heading"
     >
-      {/* AnimatedBackground with absolute positioning */}
-      <div className="absolute inset-0 z-0">
-        <AnimatedBackground {...backgroundConfig} />
-      </div>
-
-      {/* Content wrapper with higher z-index */}
-      <div className="relative z-10 w-full flex flex-col items-center justify-center">
+      {/* Content wrapper */}
+      <div className="w-full flex flex-col items-center justify-center">
         <motion.div
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={textVariants}
           className="relative mb-4"
         >
-          <div className="absolute inset-0 bg-red-600/10 blur-xl rounded-full transform -translate-y-1/2"></div>
-          <motion.span 
-            className="relative uppercase tracking-widest text-red-600 font-semibold text-sm px-6 py-2 rounded-full bg-white/80 backdrop-blur-sm shadow-sm"
-          >
-            Your Journey
-          </motion.span>
+          <div className="flex justify-center">
+            <div className="inline-block px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-semibold text-sm tracking-wider">
+              User Journey
+            </div>
+          </div>
         </motion.div>
         <motion.div
           initial="hidden"
@@ -113,53 +122,43 @@ export default function UserJourneySection() {
           variants={textVariants}
           className="relative mb-12"
         >
-          <div className="absolute inset-0 bg-[#1976D2]/10 blur-2xl rounded-full transform -translate-y-1/2"></div>
           <h2
             id="user-journey-heading"
-            className="relative text-4xl sm:text-5xl font-bold text-center text-[#1976D2] px-8 py-4 rounded-2xl bg-white/80 backdrop-blur-sm shadow-sm"
+            className="relative text-4xl sm:text-5xl font-bold text-center text-gray-800 px-8 py-4"
           >
             Your Path to Engagement
           </h2>
         </motion.div>
-        <div className="flex flex-col md:flex-row gap-8 w-full max-w-5xl mb-12">
-          {steps.map((step, idx) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl mb-12">
+          {steps.map((step, index) => (
             <motion.div
               key={step.title}
-              custom={idx}
+              custom={index}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
               variants={cardVariants}
-              className="flex-1 relative"
             >
-              {/* Solid border effect with olive green background */}
-              <div className="absolute inset-0 rounded-xl border-2 border-[#505A41] bg-[#505A41] transform translate-y-[15px] -z-10"></div>
-              <div className="bg-white/90 backdrop-blur-sm p-8 rounded-xl shadow-lg relative z-10 h-full flex flex-col items-center">
-                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-orange-500 text-white text-xl font-bold mb-4 shadow">
-                  {idx + 1}
-                </div>
-                <h3 className="font-semibold text-xl text-[#1976D2] mb-2 text-center">
-                  {step.title}
-                </h3>
-                <p className="text-gray-800 text-center">{step.description}</p>
-                {/* Progress line for horizontal layout */}
-                {idx < steps.length - 1 && (
-                  <div className="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 w-8 h-1 bg-[#505A41]"></div>
-                )}
-              </div>
+              <JourneyCard {...step} index={index} />
             </motion.div>
           ))}
         </div>
-        <motion.a
-          href="#"
-          variants={buttonVariants}
-          whileHover="hover"
-          whileTap="tap"
-          className="inline-block bg-orange-500 text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:bg-orange-600 focus:bg-orange-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 text-lg"
-          aria-label="Join Now"
+        <motion.div
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={textVariants}
+          className="flex justify-center"
         >
-          Join Now
-        </motion.a>
+          <motion.a
+            href="/join"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="font-lato bg-[#E67E22] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
+            aria-label="Join Now"
+          >
+            Join Now
+          </motion.a>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 } 

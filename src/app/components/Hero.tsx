@@ -168,16 +168,16 @@ const Hero = () => {
 
   const phrases = [
     "Your Voice. Your Community. One Platform.",
-    "Connect. Collaborate. Create Change.",
-    "Building Better Cities Together.",
-    "Empowering Urban Communities.",
+    "Connect. Collaborate. Conclude.",
+    "Every Voice Matters. Every Action Counts",
+    "Real People. Real Issues. Real Solutions.",
   ];
 
   return (
     <PageTransition>
       <motion.div 
         ref={ref}
-        className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-[#F5F5F5] border-[10px] border-black"
+        className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-[#F5F5F5] shadow-[0_0_0_4px_white]"
         initial="hidden"
         animate={isInView ? "visible" : (hasAnimatedIn ? "scrolledOut" : "hidden")}
         variants={heroVariants}
@@ -193,10 +193,10 @@ const Hero = () => {
             initial={{ scale: 1.1, opacity: 0 }}
             animate={isInView ? { scale: 1, opacity: 1 } : { scale: 1.05, opacity: 0 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="relative w-full h-full"
+            className="relative w-full h-full aspect-[16/9]"
           >
             <Image
-              src="/images/hero-bg.jpg"
+              src="/images/hero-bg.jpg?v=2"
               alt="Diverse group of people engaging in conversation and pointing at a city map"
               fill
               className="object-cover"
@@ -204,7 +204,7 @@ const Hero = () => {
             />
           </motion.div>
           <motion.div 
-            className="absolute inset-0 bg-black/70"
+            className="absolute inset-0 bg-gradient-to-br from-emerald-900/70 via-emerald-800/30 to-emerald-900/70"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 1, delay: 0.5 }}
@@ -212,19 +212,19 @@ const Hero = () => {
         </motion.div>
 
         {/* Content Container - Centered both vertically and horizontally */}
-        <div className="relative z-10 w-full h-full flex flex-col items-center justify-center text-center px-4 m-0">
+        <div className="relative z-10 w-full h-full flex flex-col items-center justify-center text-center px-4 md:px-8 lg:px-16 m-0">
           <AnimatePresence mode="wait">
             <motion.div
               variants={heroVariants}
               initial="hidden"
               animate={isInView ? "visible" : (hasAnimatedIn ? "scrolledOut" : "hidden")}
-              className="space-y-8"
+              className="space-y-7 md:space-y-10 max-w-4xl mx-auto"
             >
               {/* Heading */}
               <motion.h1
                 variants={itemVariants}
                 animate={isInView ? "visible" : (hasAnimatedIn ? "scrolledOut" : "hidden")}
-                className="text-white text-3xl sm:text-5xl md:text-6xl font-bold drop-shadow-lg min-h-[1.2em]"
+                className="font-league-spartan text-white text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold drop-shadow-lg min-h-[1.2em] tracking-tight"
                 style={{ lineHeight: 1.1 }}
               >
                 <TypewriterText phrases={phrases} />
@@ -234,23 +234,24 @@ const Hero = () => {
               <motion.p
                 variants={itemVariants}
                 animate={isInView ? "visible" : (hasAnimatedIn ? "scrolledOut" : "hidden")}
-                className="text-lg sm:text-xl text-white max-w-3xl mx-auto drop-shadow-md"
+                className="font-lato text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto drop-shadow-md leading-relaxed"
               >
-                JanStad connects citizens, expats, and local organizations to solve urban challenges together. Navigate administrative hurdles, amplify your voice in local governance, and build meaningful cross-cultural connections.
+                When communities unite with technology, problems don&apos;t just get noticed—they get solved. We&apos;re the platform that makes it happen.
+                Janstad connects citizens, expats, and local organizations to solve urban challenges together. Navigate administrative hurdles, amplify your voice in local governance, and build meaningful cross-cultural connections.
               </motion.p>
 
               {/* CTA Buttons */}
               <motion.div
                 variants={itemVariants}
                 animate={isInView ? "visible" : (hasAnimatedIn ? "scrolledOut" : "hidden")}
-                className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8"
+                className="flex flex-col sm:flex-row gap-4 md:gap-5 justify-center items-center mt-7 md:mt-10"
               >
                 <motion.button
                   variants={buttonVariants}
                   whileHover="hover"
                   whileTap="tap"
                   animate={isInView ? "visible" : (hasAnimatedIn ? "scrolledOut" : "hidden")}
-                  className="bg-orange-500 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-orange-600 transition-all duration-300 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-orange-500"
+                  className="font-lato bg-[#E67E22] text-white px-6 py-3 rounded-full text-base font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
                   aria-label="Start a Poll"
                 >
                   Start a Poll
@@ -260,7 +261,7 @@ const Hero = () => {
                   whileHover="hover"
                   whileTap="tap"
                   animate={isInView ? "visible" : (hasAnimatedIn ? "scrolledOut" : "hidden")}
-                  className="bg-orange-500 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-orange-600 transition-all duration-300 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-orange-500"
+                  className="font-lato bg-[#E67E22] text-white px-6 py-3 rounded-full text-base font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
                   aria-label="Join a Community"
                 >
                   Join a Community
@@ -270,7 +271,7 @@ const Hero = () => {
                   whileHover="hover"
                   whileTap="tap"
                   animate={isInView ? "visible" : (hasAnimatedIn ? "scrolledOut" : "hidden")}
-                  className="bg-orange-500 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-orange-600 transition-all duration-300 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-orange-500"
+                  className="font-lato bg-[#E67E22] text-white px-6 py-3 rounded-full text-base font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
                   aria-label="Explore Issues"
                 >
                   Explore Issues

@@ -2,42 +2,58 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { AnimatedBackground } from 'animated-backgrounds';
 import { 
   RiTeamLine, 
   RiGovernmentLine, 
-  RiHandHeartLine 
+  RiHandHeartLine,
+  RiFeedbackLine,
+  RiDatabase2Line,
+  RiShieldCheckLine,
+  RiGlobalLine,
+  RiRobot2Line
 } from 'react-icons/ri';
 
 const features = [
   {
-    icon: <RiTeamLine className="text-4xl text-white" aria-hidden="true" />,
-    title: "Citizens",
-    subtitle: "Engage with your community, participate in polls, and voice your concerns to local authorities.",
-    link: "/Janstad.Com Scenario Workbook.pdf",
+    icon: <RiTeamLine className="text-4xl text-gray-800" aria-hidden="true" />,
+    title: "Collaborative Platform",
+    subtitle: "Bridges the gap between Gemeenten and communities."
   },
   {
-    icon: <RiGovernmentLine className="text-4xl text-white" aria-hidden="true" />,
-    title: "Administrators",
-    subtitle: "Manage urban challenges, gather feedback, and streamline communication with residents.",
-    link: "/Janstad.Com Scenario Workbook.pdf",
+    icon: <RiFeedbackLine className="text-4xl text-gray-800" aria-hidden="true" />,
+    title: "Real-Time Feedback",
+    subtitle: "Engage residents quickly and inclusively on decisions that matter."
   },
   {
-    icon: <RiHandHeartLine className="text-4xl text-white" aria-hidden="true" />,
-    title: "Volunteers",
-    subtitle: "Connect with local initiatives, support civic projects, and make a difference in your city.",
-    link: "/Janstad.Com Scenario Workbook.pdf",
+    icon: <RiDatabase2Line className="text-4xl text-gray-800" aria-hidden="true" />,
+    title: "Data-Driven Decisions",
+    subtitle: "Turn insights into impactful actions."
   },
+  {
+    icon: <RiShieldCheckLine className="text-4xl text-gray-800" aria-hidden="true" />,
+    title: "Transparency and Trust",
+    subtitle: "Build stronger relationships with citizens through open communication."
+  },
+  {
+    icon: <RiGlobalLine className="text-4xl text-gray-800" aria-hidden="true" />,
+    title: "Inclusive Engagement",
+    subtitle: "Tailored to diverse communities, including expats."
+  },
+  {
+    icon: <RiRobot2Line className="text-4xl text-gray-800" aria-hidden="true" />,
+    title: "AI Enabled Services",
+    subtitle: "Leveraging artificial intelligence to enhance community services."
+  }
 ];
 
-function FeatureCard({ icon, title, subtitle, link }) {
+function FeatureCard({ icon, title, subtitle }) {
   return (
     <motion.div
       whileHover={{ 
         scale: 1.05,
         boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
       }}
-      className="flex flex-col items-center bg-[#505A41] rounded-xl shadow-md p-8 transition-all duration-300 hover:shadow-xl"
+      className="flex flex-col items-center bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-xl border border-gray-100"
     >
       <motion.div 
         initial={{ scale: 0, rotate: -180 }}
@@ -52,20 +68,8 @@ function FeatureCard({ icon, title, subtitle, link }) {
       >
         {icon}
       </motion.div>
-      <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-      <p className="text-white/80 text-center mb-6">{subtitle}</p>
-      <motion.a
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="inline-block bg-orange-500 text-white font-medium px-6 py-2 rounded-full shadow hover:bg-orange-600 focus:bg-orange-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
-        aria-label={`Learn more about ${title}`}
-        tabIndex={0}
-      >
-        Learn More
-      </motion.a>
+      <h3 className="text-xl font-bold text-gray-800 mb-2 text-center">{title}</h3>
+      <p className="text-gray-600 text-center">{subtitle}</p>
     </motion.div>
   );
 }
@@ -74,58 +78,29 @@ export default function FeaturesSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { margin: "-100px" });
 
-  // Configuration for the animated background
-  const backgroundConfig = {
-    animationName: 'particleNetwork',
-    style: { 
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      opacity: 0.3,
-      zIndex: 0
-    },
-    config: {
-      particleColor: '#808080',
-      backgroundColor: 'transparent',
-      particleCount: 50,
-      particleSize: 3,
-      lineColor: '#808080',
-      lineWidth: 1,
-      speed: 1
-    }
-  };
-
   return (
     <motion.section
       ref={ref}
       initial={{ opacity: 0, y: 60 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="w-full min-h-screen bg-[#F5F5F5] py-16 px-4 border-[10px] border-black flex flex-col items-center justify-center relative overflow-hidden"
+      className="w-full h-screen bg-white py-16 px-4 flex flex-col items-center justify-center relative overflow-hidden"
       id="features"
       aria-labelledby="features-heading"
     >
-      {/* AnimatedBackground with absolute positioning */}
-      <div className="absolute inset-0 z-0">
-        <AnimatedBackground {...backgroundConfig} />
-      </div>
-
-      {/* Content wrapper with higher z-index */}
-      <div className="relative z-10 w-full flex flex-col items-center justify-center">
+      {/* Content wrapper */}
+      <div className="w-full flex flex-col items-center justify-center">
         <motion.div
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={textVariants}
           className="relative mb-4"
         >
-          <div className="absolute inset-0 bg-red-600/10 blur-xl rounded-full transform -translate-y-1/2"></div>
-          <motion.span 
-            className="relative uppercase tracking-widest text-red-600 font-semibold text-sm px-6 py-2 rounded-full bg-white/80 backdrop-blur-sm shadow-sm"
-          >
-            Our Features
-          </motion.span>
+          <div className="flex justify-center">
+            <div className="inline-block px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-semibold text-sm tracking-wider">
+              Our Features
+            </div>
+          </div>
         </motion.div>
         <motion.div
           initial="hidden"
@@ -133,15 +108,14 @@ export default function FeaturesSection() {
           variants={textVariants}
           className="relative mb-12"
         >
-          <div className="absolute inset-0 bg-[#1976D2]/10 blur-2xl rounded-full transform -translate-y-1/2"></div>
           <h2
             id="features-heading"
-            className="relative text-4xl sm:text-5xl font-bold text-center text-[#1976D2] px-8 py-4 rounded-2xl bg-white/80 backdrop-blur-sm shadow-sm"
+            className="relative text-4xl sm:text-5xl font-bold text-center text-gray-800 px-8 py-4"
           >
-            Platform Features for Every Stakeholder
+            What are the features?
           </h2>
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full justify-items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
@@ -154,6 +128,22 @@ export default function FeaturesSection() {
             </motion.div>
           ))}
         </div>
+        <motion.div
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={textVariants}
+          className="flex justify-center mt-12"
+        >
+          <motion.a
+            href="/features-services"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="font-lato bg-[#E67E22] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
+            aria-label="View all features and services"
+          >
+            Features and Services
+          </motion.a>
+        </motion.div>
       </div>
     </motion.section>
   );

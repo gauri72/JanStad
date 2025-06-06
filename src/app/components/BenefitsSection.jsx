@@ -1,131 +1,155 @@
 'use client';
 
 import React, { useRef } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
-import { AnimatedBackground } from 'animated-backgrounds';
+import { motion, useInView } from "framer-motion";
+import { 
+  RiUserHeartLine,
+  RiTeamLine,
+  RiGovernmentLine
+} from 'react-icons/ri';
 
-const aboutVariants = {
-  hidden: { opacity: 0, y: 60 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, staggerChildren: 0.2, ease: "easeOut" } },
-  exit: { opacity: 0, y: -40, transition: { duration: 0.5, ease: "easeInOut" } },
+const benefits = [
+  {
+    title: "For Citizens",
+    description: "Access resources, connect with your community, and make your voice heard in local decision-making.",
+    icon: <RiUserHeartLine className="text-4xl text-white" aria-hidden="true" />
+  },
+  {
+    title: "For NGOs",
+    description: "Amplify your impact with digital tools for community engagement and transparent communication.",
+    icon: <RiTeamLine className="text-4xl text-white" aria-hidden="true" />
+  },
+  {
+    title: "For Governments",
+    description: "Build trust and drive participation with modern civic engagement solutions.",
+    icon: <RiGovernmentLine className="text-4xl text-white" aria-hidden="true" />
+  }
+];
+
+const textVariants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut"
+    }
+  }
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-  exit: { opacity: 0, y: -40, transition: { duration: 0.5, ease: "easeInOut" } },
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.2,
+      duration: 0.5,
+      ease: "easeOut"
+    }
+  })
 };
 
-const buttonVariants = {
-  hover: { scale: 1.08, boxShadow: '0 8px 32px 0 rgba(255,140,0,0.25)' },
-  tap: { scale: 0.97 },
-};
+function BenefitCard({ icon, title, description }) {
+  return (
+    <motion.div
+      whileHover={{ 
+        scale: 1.05,
+        boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+      }}
+      className="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-xl border border-white/20"
+    >
+      <motion.div 
+        initial={{ scale: 0, rotate: -180 }}
+        whileInView={{ scale: 1, rotate: 0 }}
+        transition={{
+          type: "spring",
+          stiffness: 260,
+          damping: 20,
+          delay: 0.2
+        }}
+        className="mb-4"
+      >
+        {icon}
+      </motion.div>
+      <h3 className="text-xl font-bold text-white mb-2 text-center">{title}</h3>
+      <p className="text-white/80 text-center">{description}</p>
+    </motion.div>
+  );
+}
 
 export default function BenefitsSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { margin: "-100px" });
 
-  // Configuration for the animated background
-  const backgroundConfig = {
-    animationName: 'particleNetwork',
-    style: { 
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      opacity: 0.3,
-      zIndex: 0
-    },
-    config: {
-      particleColor: '#808080',
-      backgroundColor: 'transparent',
-      particleCount: 50,
-      particleSize: 3,
-      lineColor: '#808080',
-      lineWidth: 1,
-      speed: 1
-    }
-  };
-
   return (
-    <section
+    <motion.section
       ref={ref}
-      className="w-full min-h-screen bg-[#F5F5F5] flex flex-col md:flex-row items-center justify-center px-4 md:px-8 border-[10px] border-black relative overflow-hidden"
+      initial={{ opacity: 0, y: 60 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="w-full h-screen bg-[#1B4332] py-16 px-4 flex flex-col items-center justify-center relative overflow-hidden"
       id="benefits"
       aria-labelledby="benefits-heading"
     >
-      {/* AnimatedBackground with absolute positioning */}
-      <div className="absolute inset-0 z-0">
-        <AnimatedBackground {...backgroundConfig} />
-      </div>
-
-      {/* Content wrapper with higher z-index */}
-      <div className="relative z-10 w-full flex flex-col md:flex-row items-stretch justify-center gap-8">
-        {/* Left Column */}
-        <AnimatePresence>
-          <motion.div
-            variants={aboutVariants}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            exit="exit"
-            className="flex-1 flex flex-col items-start justify-center max-w-xl w-full relative h-full"
-          >
-            {/* Solid border effect with olive green background - mirrored */}
-            <div className="absolute inset-0 rounded-xl border-2 border-[#505A41] bg-[#505A41] transform -translate-x-[25px] translate-y-[25px] -z-10"></div>
-            <div className="bg-white/90 backdrop-blur-sm p-12 rounded-xl shadow-lg relative z-10 h-full flex flex-col justify-between">
-              <div className="space-y-6">
-                <motion.span
-                  variants={itemVariants}
-                  className="uppercase tracking-widest text-red-600 font-semibold text-sm block"
-                >
-                  Why Choose Us
-                </motion.span>
-                <motion.h2
-                  variants={itemVariants}
-                  className="text-4xl sm:text-5xl font-bold text-[#1976D2] leading-tight"
-                >
-                  Transform How Communities Connect & Collaborate
-                </motion.h2>
-                <motion.p
-                  variants={itemVariants}
-                  className="text-gray-800 text-xl font-medium"
-                >
-                  JanStad empowers citizens, NGOs, and governments with modern digital tools for transparent communication, collaborative problem-solving, and impactful civic engagement. Build trust, drive participation, and shape your city's future—together.
-                </motion.p>
-              </div>
-              <motion.div
-                variants={itemVariants}
-                className="flex flex-col sm:flex-row gap-4 pt-8"
-              >
-                <motion.a
-                  variants={buttonVariants}
-                  whileHover="hover"
-                  whileTap="tap"
-                  href="/start-trial"
-                  aria-label="Start Free Trial"
-                  className="inline-block bg-orange-500 text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:bg-orange-600 focus:bg-orange-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 text-lg"
-                >
-                  Start Free Trial
-                </motion.a>
-              </motion.div>
+      {/* Content wrapper */}
+      <div className="w-full flex flex-col items-center justify-center">
+        <motion.div
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={textVariants}
+          className="relative mb-4"
+        >
+          <div className="flex justify-center">
+            <div className="inline-block px-4 py-2 rounded-full bg-emerald-100 text-emerald-700 font-semibold text-sm tracking-wider">
+              Benefits
             </div>
-          </motion.div>
-        </AnimatePresence>
-        
-        {/* Right Column */}
-        <div className="flex-1 flex items-center justify-center w-full max-w-lg">
-          <div className="relative h-full">
-            {/* Solid border effect with olive green background */}
-            <div className="absolute inset-0 rounded-xl border-2 border-[#505A41] bg-[#505A41] transform translate-x-[25px] translate-y-[25px] -z-10"></div>
-            <img
-              src="/images/benefits-illustration.jpg"
-              alt="Civic engagement illustration"
-              className="rounded-xl shadow-lg w-full h-full object-cover relative z-10"
-            />
           </div>
+        </motion.div>
+        <motion.div
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={textVariants}
+          className="relative mb-12"
+        >
+          <h2
+            id="benefits-heading"
+            className="relative text-4xl sm:text-5xl font-bold text-center text-white px-8 py-4"
+          >
+            Transform How Communities Connect & Collaborate
+          </h2>
+        </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl mb-12">
+          {benefits.map((benefit, index) => (
+            <motion.div
+              key={benefit.title}
+              custom={index}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              variants={cardVariants}
+            >
+              <BenefitCard {...benefit} />
+            </motion.div>
+          ))}
         </div>
+        <motion.div
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={textVariants}
+          className="flex justify-center"
+        >
+          <motion.a
+            href="/start-trial"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="font-lato bg-[#E67E22] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
+            aria-label="Start Free Trial"
+          >
+            Start Free Trial
+          </motion.a>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 } 

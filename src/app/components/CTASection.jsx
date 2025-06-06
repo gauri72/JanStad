@@ -1,8 +1,14 @@
 'use client';
 
 import React, { useRef } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
-import { AnimatedBackground } from 'animated-backgrounds';
+import { motion, useInView } from "framer-motion";
+import { 
+  RiTeamLine,
+  RiFileTextLine,
+  RiCodeLine,
+  RiBuildingLine,
+  RiCheckLine
+} from 'react-icons/ri';
 
 const textVariants = {
   hidden: { opacity: 0, y: -20 },
@@ -28,115 +34,180 @@ const contentVariants = {
   }
 };
 
-const buttonVariants = {
-  hover: { scale: 1.08, boxShadow: '0 8px 32px 0 rgba(255,140,0,0.25)' },
-  tap: { scale: 0.97 },
-};
+const waysToJoin = [
+  {
+    title: "Community Ambassador",
+    description: "Help grow our platform in your neighborhood by introducing Janstad to local organizations and newcomers.",
+    icon: <RiTeamLine className="text-4xl text-white" aria-hidden="true" />
+  },
+  {
+    title: "Content Contributor",
+    description: "Share your expertise by creating guides, translating resources, or developing content that helps others navigate urban challenges.",
+    icon: <RiFileTextLine className="text-4xl text-white" aria-hidden="true" />
+  },
+  {
+    title: "Technical Volunteer",
+    description: "Put your technical skills to work by helping develop and improve our platform.",
+    icon: <RiCodeLine className="text-4xl text-white" aria-hidden="true" />
+  },
+  {
+    title: "Partner Organization",
+    description: "If you represent an NGO or public service agency, partner with us to extend your reach through our digital platform.",
+    icon: <RiBuildingLine className="text-4xl text-white" aria-hidden="true" />
+  }
+];
+
+const benefits = [
+  "Be part of creating more equitable, participatory urban spaces",
+  "Connect with diverse change-makers across sectors",
+  "See tangible impact from your contributions"
+];
+
+function WayToJoinCard({ icon, title, description }) {
+  return (
+    <motion.div
+      whileHover={{ 
+        scale: 1.05,
+        boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+      }}
+      className="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 h-full"
+    >
+      <div className="mb-4">{icon}</div>
+      <h3 className="text-xl font-bold text-white mb-3 text-center">{title}</h3>
+      <p className="text-white/80 text-center">{description}</p>
+    </motion.div>
+  );
+}
 
 export default function CTASection() {
   const ref = useRef(null);
   const inView = useInView(ref, { margin: "-100px" });
 
-  // Configuration for the animated background
-  const backgroundConfig = {
-    animationName: 'particleNetwork',
-    style: { 
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      opacity: 0.3,
-      zIndex: 0
-    },
-    config: {
-      particleColor: '#808080',
-      backgroundColor: 'transparent',
-      particleCount: 50,
-      particleSize: 3,
-      lineColor: '#808080',
-      lineWidth: 1,
-      speed: 1
-    }
-  };
-
   return (
-    <section
+    <motion.section
       ref={ref}
-      className="w-full bg-[#F5F5F5] py-16 px-4 flex flex-col items-center justify-center border-[10px] border-black relative overflow-hidden"
+      initial={{ opacity: 0, y: 60 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="w-full min-h-screen bg-[#1B4332] py-16 px-4 flex flex-col items-center justify-center relative overflow-hidden"
       id="cta"
       aria-labelledby="cta-heading"
     >
-      {/* AnimatedBackground with absolute positioning */}
-      <div className="absolute inset-0 z-0">
-        <AnimatedBackground {...backgroundConfig} />
-      </div>
-
-      {/* Content wrapper with higher z-index */}
-      <div className="relative z-10 w-full flex flex-col items-center justify-center">
+      {/* Content wrapper */}
+      <div className="w-full max-w-7xl flex flex-col items-center justify-center">
         <motion.div
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={textVariants}
           className="relative mb-4"
         >
-          <div className="absolute inset-0 bg-red-600/10 blur-xl rounded-full transform -translate-y-1/2"></div>
-          <motion.span 
-            className="relative uppercase tracking-widest text-red-600 font-semibold text-sm px-6 py-2 rounded-full bg-white/80 backdrop-blur-sm shadow-sm"
-          >
-            Get Started
-          </motion.span>
+          <div className="flex justify-center">
+            <div className="inline-block px-4 py-2 rounded-full bg-emerald-100 text-emerald-700 font-semibold text-sm tracking-wider">
+              Join Us
+            </div>
+          </div>
         </motion.div>
         <motion.div
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={textVariants}
-          className="relative mb-12"
+          className="relative mb-8"
         >
-          <div className="absolute inset-0 bg-[#1976D2]/10 blur-2xl rounded-full transform -translate-y-1/2"></div>
           <h2
             id="cta-heading"
-            className="relative text-4xl sm:text-5xl font-bold text-center text-[#1976D2] px-8 py-4 rounded-2xl bg-white/80 backdrop-blur-sm shadow-sm"
+            className="relative text-4xl sm:text-5xl font-bold text-center text-white px-8 py-4"
           >
-            Ready to Transform Your Community?
+            BECOME PART OF THE SOLUTION
           </h2>
         </motion.div>
         <motion.div
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={contentVariants}
-          className="relative max-w-2xl mx-auto text-center mb-12"
+          className="relative max-w-3xl mx-auto text-center mb-12"
         >
-          <div className="absolute inset-0 rounded-xl border-2 border-[#505A41] bg-[#505A41] transform translate-y-[15px] -z-10"></div>
-          <div className="bg-white/90 backdrop-blur-sm p-8 rounded-xl shadow-lg relative z-10">
-            <p className="text-gray-800 text-xl font-medium mb-8">
-              Join JanStad today and be part of the movement to create more connected, responsive, and vibrant communities. Together, we can build a better future for everyone.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.a
-                href="/start-trial"
-                variants={buttonVariants}
-                whileHover="hover"
-                whileTap="tap"
-                className="inline-block bg-orange-500 text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:bg-orange-600 transition-colors duration-200 text-lg"
-                aria-label="Start Free Trial"
-              >
-                Start Free Trial
-              </motion.a>
-              <motion.a
-                href="/contact"
-                variants={buttonVariants}
-                whileHover="hover"
-                whileTap="tap"
-                className="inline-block bg-orange-500 text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:bg-orange-600 transition-colors duration-200 text-lg"
-                aria-label="Contact Sales"
-              >
-                Contact Sales
-              </motion.a>
-            </div>
+          <p className="text-white/90 text-xl font-medium">
+            At Janstad, we're bringing together passionate people who believe in the power of inclusive urban communities.
+          </p>
+        </motion.div>
+
+        {/* Image Section */}
+        <motion.div
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={contentVariants}
+          className="w-full flex justify-center mb-12"
+        >
+          {/* Replace this img tag with your actual image path */}
+          <img 
+            src="/images/cta-image.jpg" 
+            alt="Diverse urban communities, collaborative spaces, and people helping each other" 
+            className="rounded-xl shadow-lg max-h-96 w-auto object-cover"
+          />
+        </motion.div>
+
+        {/* Ways to Join Section */}
+        <motion.div
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={textVariants}
+          className="w-full mb-12"
+        >
+          <h3 className="text-2xl font-bold text-white text-center mb-8">WAYS TO JOIN</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {waysToJoin.map((way) => (
+              <WayToJoinCard key={way.title} {...way} />
+            ))}
           </div>
         </motion.div>
+
+        {/* Why Join Us Section */}
+        <motion.div
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={contentVariants}
+          className="w-full max-w-3xl mx-auto mb-12"
+        >
+          <h3 className="text-2xl font-bold text-white text-center mb-8">WHY JOIN US?</h3>
+          <div className="bg-white/10 backdrop-blur-sm p-8 rounded-xl">
+            <ul className="space-y-4">
+              {benefits.map((benefit, index) => (
+                <li key={index} className="flex items-center text-white/90">
+                  <RiCheckLine className="text-[#E67E22] text-xl mr-3" />
+                  <span>{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
+
+        {/* CTA Buttons */}
+        <motion.div
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={textVariants}
+          className="flex flex-col sm:flex-row gap-4 justify-center"
+        >
+          <motion.a
+            href="/join-team"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="font-lato bg-[#E67E22] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
+            aria-label="Join Our Team"
+          >
+            Join Our Team
+          </motion.a>
+          <motion.a
+            href="/contact"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="font-lato bg-[#E67E22] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
+            aria-label="Contact Us"
+          >
+            Contact Us
+          </motion.a>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 } 

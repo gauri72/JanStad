@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <footer className="bg-white text-black py-8 shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+    <footer className="bg-white text-black py-8 shadow-[0_4px_12px_rgba(0,0,0,0.2)] border-t border-gray-200">
       <div className="container mx-auto px-4 flex flex-col items-center justify-center">
         {/* Logo - Centered, slightly smaller for compactness */}
         <div className="flex justify-center mb-4">
@@ -65,6 +65,13 @@ const Footer = () => {
               className="group relative text-base font-lato text-black/70 hover:text-primary transition-colors duration-300 select-none"
             >
               Privacy Policy
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full group-active:bg-primary"></span>
+            </Link>
+            <Link 
+              href="/career"
+              className="group relative text-base font-lato text-black/70 hover:text-primary transition-colors duration-300 select-none"
+            >
+              Career
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full group-active:bg-primary"></span>
             </Link>
           </div>

@@ -1,153 +1,150 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
-import { AnimatedBackground } from 'animated-backgrounds'; // Import AnimatedBackground
-// Removed Particles import
-// import Particles from "react-tsparticles";
-// import type { Container, Engine } from "tsparticles-engine"; // Optional type imports
-// import { loadSlim } from "tsparticles-slim"; // Loads the lighter version of tsparticles
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import Image from 'next/image';
+import { FaLightbulb, FaHandshake, FaChartLine } from 'react-icons/fa';
 
-const aboutVariants = {
-  hidden: { opacity: 0, y: 60 }, // Start animation from slightly below
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, staggerChildren: 0.2, ease: "easeOut" } },
-  // Keeping exit for completeness
-  exit: { opacity: 0, y: -40, transition: { duration: 0.5, ease: "easeInOut" } }, 
-};
+const values = [
+  {
+    icon: <FaLightbulb className="w-8 h-8 text-gray-800" />,
+    title: "Innovation First",
+    description: "Pushing boundaries to create better solutions for urban communities"
+  },
+  {
+    icon: <FaHandshake className="w-8 h-8 text-gray-800" />,
+    title: "Community Driven",
+    description: "Empowering citizens to shape their cities' future"
+  },
+  {
+    icon: <FaChartLine className="w-8 h-8 text-gray-800" />,
+    title: "Sustainable Growth",
+    description: "Building scalable solutions that last"
+  }
+];
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-  // Keeping exit for completeness
-  exit: { opacity: 0, y: -40, transition: { duration: 0.5, ease: "easeInOut" } },
-};
-
-const buttonVariants = {
-  hover: { scale: 1.08, boxShadow: '0 8px 32px 0 rgba(255,140,0,0.25)' },
-  tap: { scale: 0.97 },
-};
-
-export default function AboutSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { margin: "-100px" }); // Trigger when 100px of the section is in view, without `once: true`
-
-  // Updated configuration for better visibility
-  const greyThemeConfig = {
-    animationName: 'particleNetwork',
-    style: { 
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      opacity: 0.3, // Reduced opacity to make text more visible
-      zIndex: 0
-    },
-    config: {
-      particleColor: '#808080',
-      backgroundColor: 'transparent',
-      particleCount: 50,
-      particleSize: 3,
-      lineColor: '#808080',
-      lineWidth: 1,
-      speed: 1
+const textVariants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut"
     }
-  };
+  }
+};
 
-  // Removed particlesOptions and particlesInit/particlesLoaded functions
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.2,
+      duration: 0.5,
+      ease: "easeOut"
+    }
+  })
+};
+
+const AboutSection = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { margin: "-100px" });
 
   return (
     <section
       ref={ref}
-      className="w-full min-h-screen bg-[#F5F5F5] flex flex-col md:flex-row items-center justify-center px-4 md:px-8 border-[10px] border-black relative overflow-hidden"
+      className="w-full min-h-screen bg-white py-16 px-4 flex flex-col items-center justify-center relative overflow-hidden"
       id="about"
-      aria-labelledby="about-heading"
     >
-      {/* AnimatedBackground with absolute positioning */}
-      <div className="absolute inset-0 z-0">
-        <AnimatedBackground {...greyThemeConfig} />
-      </div>
-
-      {/* Content wrapper with higher z-index */}
-      <div className="relative z-10 w-full flex flex-col md:flex-row items-stretch justify-center gap-8">
-        {/* Left Column */}
-        <AnimatePresence>
+      <div className="container mx-auto px-4 h-full max-w-7xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center h-full">
+          {/* Left Column - Image */}
           <motion.div
-            variants={aboutVariants}
+            variants={cardVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            exit="exit"
-            className="flex-1 flex flex-col items-start justify-center max-w-xl w-full relative h-full"
+            className="relative"
           >
-            {/* Solid border effect with olive green background - mirrored */}
-            <div className="absolute inset-0 rounded-xl border-2 border-[#505A41] bg-[#505A41] transform -translate-x-[25px] translate-y-[25px] -z-10"></div>
-            <div className="bg-white/90 backdrop-blur-sm p-12 rounded-xl shadow-lg relative z-10 h-full flex flex-col justify-between">
-              <div className="space-y-6">
-                <motion.span
-                  variants={itemVariants}
-                  className="uppercase tracking-widest text-red-600 font-semibold text-sm block"
-                >
-                  About JanStad
-                </motion.span>
-                <motion.h2
-                  variants={itemVariants}
-                  className="text-4xl sm:text-5xl font-bold text-[#1976D2] leading-tight"
-                >
-                  Building Bridges for Better Cities
-                </motion.h2>
-                <motion.p
-                  variants={itemVariants}
-                  className="text-gray-800 text-xl font-medium"
-                >
-                  JanStad is a civic technology platform dedicated to empowering communities, fostering collaboration, and driving positive change in urban environments. Our mission is to connect citizens, local organizations, and governments, making it easier to address key issues, share ideas, and create sustainable solutions for the cities of tomorrow.
-                </motion.p>
-              </div>
-              <motion.div
-                variants={itemVariants}
-                className="flex flex-col sm:flex-row gap-4 pt-8"
-              >
-                <motion.a
-                  variants={buttonVariants}
-                  whileHover="hover"
-                  whileTap="tap"
-                  href="https://janstad.com/policy/aboutus.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="About Page"
-                  className="inline-block bg-orange-500 text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:bg-orange-600 focus:bg-orange-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 text-lg"
-                >
-                  About Page
-                </motion.a>
-                <motion.a
-                  variants={buttonVariants}
-                  whileHover="hover"
-                  whileTap="tap"
-                  href="https://janstad.com/policy/aboutus.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="User Journey"
-                  className="inline-block bg-orange-500 text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:bg-orange-600 focus:bg-orange-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 text-lg"
-                >
-                  User Journey
-                </motion.a>
-              </motion.div>
+            {/* Main Image */}
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <Image
+                src="/images/about-illustration.jpg"
+                alt="JanStad Team"
+                width={600}
+                height={400}
+                className="w-full h-auto object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
             </div>
           </motion.div>
-        </AnimatePresence>
-        
-        {/* Right Column */}
-        <div className="flex-1 flex items-center justify-center w-full max-w-lg">
-          <div className="relative h-full">
-            {/* Solid border effect with olive green background */}
-            <div className="absolute inset-0 rounded-xl border-2 border-[#505A41] bg-[#505A41] transform translate-x-[25px] translate-y-[25px] -z-10"></div>
-            <img
-              src="/images/about-illustration.jpg"
-              alt="About JanStad illustration"
-              className="rounded-xl shadow-lg w-full h-full object-cover relative z-10"
-            />
-          </div>
+
+          {/* Right Column - Content */}
+          <motion.div
+            variants={cardVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="space-y-8"
+          >
+            {/* Label and Content */}
+            <motion.div variants={textVariants} className="space-y-6">
+              <div className="flex justify-center lg:justify-start">
+                <div className="inline-block px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-semibold text-sm tracking-wider">
+                  About JanStad
+                </div>
+              </div>
+              <div className="space-y-4">
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  Janstad was born from a simple observation: urban communities thrive when everyone has equal access to information, services, and decision-making processes.
+                </p>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  JanStad.com is a platform built to connect people with the power to shape their surroundings—whether you're an expat, a student, a local resident, or an organization seeking change.
+                </p>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  Born from the real frustrations of civic disconnection, we created a space where anyone can raise issues, rally support, and be part of practical, meaningful progress.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Values Grid */}
+            <motion.div variants={textVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {values.map((value, index) => (
+                <motion.div
+                  key={index}
+                  whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+                  }}
+                  className="flex flex-col items-center bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-xl border border-gray-100"
+                >
+                  <div className="mb-3">{value.icon}</div>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2 text-center">
+                    {value.title}
+                  </h3>
+                  <p className="text-sm text-gray-600 text-center">
+                    {value.description}
+                  </p>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* CTA Button */}
+            <motion.div variants={textVariants} className="flex flex-wrap gap-4">
+              <motion.a
+                href="/about"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="font-lato bg-[#E67E22] text-white px-6 py-3 rounded-full text-base font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
+              >
+                Explore Our Story
+              </motion.a>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>
   );
-} 
+};
+
+export default AboutSection; 

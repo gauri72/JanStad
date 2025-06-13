@@ -3,8 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./Header";
 import Footer from "./Footer";
-import CustomCursor from "./components/CustomCursor";
-import { AnimatePresence } from "framer-motion";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,10 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "JanStad",
-  icons: {
-    icon: "/images/Favicon_Logo.ico",
-  },
+  title: "JanStad - Your Voice. Your Community. One Platform.",
+  description: "JanStad connects citizens, expats, and local organizations to solve urban challenges together.",
 };
 
 export default function RootLayout({
@@ -31,13 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased cursor-none`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <CustomCursor />
         <Header />
-        <AnimatePresence mode="wait">
-          {children}
-        </AnimatePresence>
+        {children}
         <Footer />
       </body>
     </html>

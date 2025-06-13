@@ -131,21 +131,6 @@ export default function CTASection() {
           </p>
         </motion.div>
 
-        {/* Image Section */}
-        <motion.div
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          variants={contentVariants}
-          className="w-full flex justify-center mb-12"
-        >
-          {/* Replace this img tag with your actual image path */}
-          <img 
-            src="/images/cta-image.jpg" 
-            alt="Diverse urban communities, collaborative spaces, and people helping each other" 
-            className="rounded-xl shadow-lg max-h-96 w-auto object-cover"
-          />
-        </motion.div>
-
         {/* Ways to Join Section */}
         <motion.div
           initial="hidden"

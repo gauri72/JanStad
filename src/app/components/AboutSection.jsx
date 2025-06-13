@@ -53,97 +53,90 @@ const AboutSection = () => {
   const isInView = useInView(ref, { margin: "-100px" });
 
   return (
-    <section
+    <motion.section
       ref={ref}
-      className="w-full min-h-screen bg-white py-16 px-4 flex flex-col items-center justify-center relative overflow-hidden"
+      initial={{ opacity: 0, y: 60 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="w-full py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 lg:px-16 bg-white"
       id="about"
     >
-      <div className="container mx-auto px-4 h-full max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center h-full">
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header */}
+        <motion.div
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={textVariants}
+          className="text-center mb-12 sm:mb-16 md:mb-20"
+        >
+          <div className="flex justify-center mb-4">
+            <div className="inline-block px-4 py-2 rounded-full bg-emerald-100 text-emerald-700 font-semibold text-sm tracking-wider">
+              About Us
+            </div>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+            Empowering Urban Communities
+          </h2>
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
+            We're building a platform that connects citizens, expats, and local organizations to solve urban challenges together.
+          </p>
+        </motion.div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center">
           {/* Left Column - Image */}
           <motion.div
-            variants={cardVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="relative"
+            variants={cardVariants}
+            className="relative w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[4/3] rounded-2xl overflow-hidden shadow-xl"
           >
-            {/* Main Image */}
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <Image
-                src="/images/about-illustration.jpg"
-                alt="JanStad Team"
-                width={600}
-                height={400}
-                className="w-full h-auto object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-            </div>
+            <Image
+              src="/images/about-illustration.jpg"
+              alt="Diverse group of people collaborating in an urban setting"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
           </motion.div>
 
-          {/* Right Column - Content */}
+          {/* Right Column - Text Content */}
           <motion.div
-            variants={cardVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="space-y-8"
+            variants={cardVariants}
+            className="space-y-6 sm:space-y-8"
           >
-            {/* Label and Content */}
-            <motion.div variants={textVariants} className="space-y-6">
-              <div className="flex justify-center lg:justify-start">
-                <div className="inline-block px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-semibold text-sm tracking-wider">
-                  About JanStad
-                </div>
-              </div>
-              <div className="space-y-4">
-                <p className="text-lg text-gray-600 leading-relaxed">
-                  Janstad was born from a simple observation: urban communities thrive when everyone has equal access to information, services, and decision-making processes.
-                </p>
-                <p className="text-lg text-gray-600 leading-relaxed">
-                  JanStad.com is a platform built to connect people with the power to shape their surroundings—whether you're an expat, a student, a local resident, or an organization seeking change.
-                </p>
-                <p className="text-lg text-gray-600 leading-relaxed">
-                  Born from the real frustrations of civic disconnection, we created a space where anyone can raise issues, rally support, and be part of practical, meaningful progress.
-                </p>
-              </div>
-            </motion.div>
+            <div className="space-y-4 sm:space-y-6">
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                Our Mission
+              </h3>
+              <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+                To create more inclusive, participatory urban spaces where every voice matters and every action counts. We believe in the power of community-driven solutions to address local challenges.
+              </p>
+            </div>
 
-            {/* Values Grid */}
-            <motion.div variants={textVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {values.map((value, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ 
-                    scale: 1.05,
-                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-                  }}
-                  className="flex flex-col items-center bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-xl border border-gray-100"
-                >
-                  <div className="mb-3">{value.icon}</div>
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2 text-center">
-                    {value.title}
-                  </h3>
-                  <p className="text-sm text-gray-600 text-center">
-                    {value.description}
-                  </p>
-                </motion.div>
-              ))}
-            </motion.div>
+            <div className="space-y-4 sm:space-y-6">
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                Our Vision
+              </h3>
+              <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+                A world where urban communities are empowered to shape their own future, where technology bridges gaps between citizens and local governance, and where diversity is celebrated as a strength.
+              </p>
+            </div>
 
-            {/* CTA Button */}
-            <motion.div variants={textVariants} className="flex flex-wrap gap-4">
-              <motion.a
-                href="/about"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="font-lato bg-[#E67E22] text-white px-6 py-3 rounded-full text-base font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
-              >
-                Explore Our Story
-              </motion.a>
-            </motion.div>
+            <div className="space-y-4 sm:space-y-6">
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                What We Do
+              </h3>
+              <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+                We provide a digital platform that facilitates meaningful connections, enables collaborative problem-solving, and amplifies community voices in urban development and governance.
+              </p>
+            </div>
           </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

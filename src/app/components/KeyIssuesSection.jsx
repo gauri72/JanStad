@@ -5,37 +5,30 @@ import { motion, useInView } from "framer-motion";
 import { 
   RiFileList3Line, 
   RiTeamLine, 
-  RiGlobalLine, 
-  RiBuildingLine 
+  RiGlobalLine
 } from 'react-icons/ri';
 import { Card, CardContent, CardHeader, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 const issues = [
   {
-    title: "Administrative Simplification",
+    title: "Administrative Support",
     description:
-      "Navigate bureaucratic processes with ease through our centralized resources and community support.",
-    icon: RiFileList3Line
+      "Access streamlined resources and guidance to navigate bureaucratic processes with confidence.",
+    icon: <RiFileList3Line className="text-4xl" />
   },
   {
-    title: "Civic Participation",
+    title: "Community Engagement",
     description:
-      "Your voice matters. Join discussions that shape policies affecting your neighborhood and city.",
-    icon: RiTeamLine
+      "Connect with neighbors, participate in local initiatives, and shape your community's future.",
+    icon: <RiTeamLine className="text-4xl" />
   },
   {
     title: "Cultural Integration",
     description:
-      "Build connections across cultural divides and find your community within the larger urban landscape.",
-    icon: RiGlobalLine
-  },
-  {
-    title: "Urban Planning Input",
-    description:
-      "Contribute your ideas and feedback to help create more livable, inclusive cities.",
-    icon: RiBuildingLine
-  },
+      "Build bridges across cultures and find your place in the vibrant urban landscape.",
+    icon: <RiGlobalLine className="text-4xl" />
+  }
 ];
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -105,89 +98,73 @@ export default function KeyIssuesSection() {
       initial={{ opacity: 0, y: 60 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="w-full min-h-screen bg-[#1B4332] flex flex-col items-center justify-center px-4 relative overflow-hidden"
+      className="w-full py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 lg:px-16 bg-[#1B4332]"
       id="key-issues"
-      aria-labelledby="key-issues-heading"
     >
-      {/* Content wrapper */}
-      <div className="w-full flex flex-col items-center justify-center">
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header */}
         <motion.div
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={textVariants}
-          className="relative mb-4"
+          className="text-center mb-12 sm:mb-16 md:mb-20"
         >
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-4">
             <div className="inline-block px-4 py-2 rounded-full bg-emerald-100 text-emerald-700 font-semibold text-sm tracking-wider">
-              Key Challenges
+              Key Issues
             </div>
           </div>
-        </motion.div>
-        <motion.div
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          variants={textVariants}
-          className="relative mb-12"
-        >
-          <h2
-            id="key-issues-heading"
-            className="relative text-4xl sm:text-5xl font-bold text-center text-white px-8 py-4"
-          >
-            Addressing What Matters
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
+            Addressing Urban Challenges
           </h2>
+          <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto">
+            We focus on the most pressing issues affecting urban communities and provide tools to address them effectively.
+          </p>
         </motion.div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full max-w-5xl mb-12">
+
+        {/* Issues Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10">
           {issues.map((issue, index) => (
             <motion.div
-              key={issue.title}
-              custom={index}
+              key={index}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
               variants={cardVariants}
+              whileHover={{ 
+                scale: 1.02,
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+              }}
+              className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-white/20"
             >
-              <StyledCard>
-                <CardHeader
-                  avatar={
-                    <motion.div
-                      initial="hidden"
-                      animate={inView ? "visible" : "hidden"}
-                      variants={iconVariants}
-                    >
-                      <StyledIconButton>
-                        <issue.icon className="text-2xl text-white" />
-                      </StyledIconButton>
-                    </motion.div>
-                  }
-                  title={
-                    <h3 className="font-semibold text-xl text-white">
-                      {issue.title}
-                    </h3>
-                  }
-                  className="pb-0"
-                />
-                <CardContent>
-                  <p className="text-white/80 text-lg leading-relaxed">
-                    {issue.description}
-                  </p>
-                </CardContent>
-              </StyledCard>
+              <div className="mb-4 sm:mb-6 text-white flex justify-center">
+                {issue.icon}
+              </div>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 text-center">
+                {issue.title}
+              </h3>
+              <p className="text-base sm:text-lg text-white/90 leading-relaxed text-center">
+                {issue.description}
+              </p>
             </motion.div>
           ))}
         </div>
-        <motion.a
-          href="/explore-issues"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-          transition={{ delay: 0.8, duration: 0.5 }}
-          whileHover={{ 
-            scale: 1.05,
-            boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"
-          }}
-          className="font-lato bg-[#E67E22] text-white px-6 py-3 rounded-full text-base font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
-          aria-label="Explore All Issues"
+
+        {/* CTA Section */}
+        <motion.div
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={textVariants}
+          className="mt-12 sm:mt-16 md:mt-20 text-center"
         >
-          Explore All Issues
-        </motion.a>
+          <motion.a
+            href="/issues"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-block font-lato bg-[#E67E22] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
+          >
+            Explore All Issues
+          </motion.a>
+        </motion.div>
       </div>
     </motion.section>
   );

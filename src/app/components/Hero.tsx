@@ -106,52 +106,30 @@ const backgroundVariants = {
   }
 };
 
-const TypewriterText = ({ phrases }: { phrases: string[] }) => {
+const AlternatingText = ({ phrases }: { phrases: string[] }) => {
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
-  const [currentText, setCurrentText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [typingSpeed, setTypingSpeed] = useState(100);
 
   useEffect(() => {
-    const currentPhrase = phrases[currentPhraseIndex];
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        if (currentText === currentPhrase) {
-          // Pause at the end of typing
-          setTypingSpeed(2000);
-          setIsDeleting(true);
-        } else {
-          setCurrentText(currentPhrase.slice(0, currentText.length + 1));
-          setTypingSpeed(100);
-        }
-      } else {
-        if (currentText === '') {
-          setIsDeleting(false);
-          setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
-          setTypingSpeed(500);
-        } else {
-          setCurrentText(currentPhrase.slice(0, currentText.length - 1));
-          setTypingSpeed(50);
-        }
-      }
-    }, typingSpeed);
+    const interval = setInterval(() => {
+      setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
+    }, 3000); // Change phrase every 3 seconds
 
-    return () => clearTimeout(timeout);
-  }, [currentText, currentPhraseIndex, isDeleting, phrases, typingSpeed]);
+    return () => clearInterval(interval);
+  }, [phrases.length]);
 
   return (
-    <motion.span
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="inline-block"
-    >
-      {currentText}
+    <AnimatePresence mode="wait">
       <motion.span
-        animate={{ opacity: [1, 0] }}
-        transition={{ duration: 0.5, repeat: Infinity }}
-        className="inline-block w-[2px] h-[1em] bg-white ml-[2px] align-middle"
-      />
-    </motion.span>
+        key={currentPhraseIndex}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.5 }}
+        className="inline-block"
+      >
+        {phrases[currentPhraseIndex]}
+      </motion.span>
+    </AnimatePresence>
   );
 };
 
@@ -177,7 +155,7 @@ const Hero = () => {
     <PageTransition>
       <motion.div 
         ref={ref}
-        className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-[#F5F5F5] shadow-[0_0_0_4px_white]"
+        className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-[#F5F5F5] shadow-[0_0_0_4px_white] pt-[100px] sm:pt-[120px]"
         initial="hidden"
         animate={isInView ? "visible" : (hasAnimatedIn ? "scrolledOut" : "hidden")}
         variants={heroVariants}
@@ -193,7 +171,7 @@ const Hero = () => {
             initial={{ scale: 1.1, opacity: 0 }}
             animate={isInView ? { scale: 1, opacity: 1 } : { scale: 1.05, opacity: 0 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="relative w-full h-full aspect-[16/9]"
+            className="relative w-full h-full"
           >
             <Image
               src="/images/hero-bg.jpg?v=2"
@@ -201,6 +179,7 @@ const Hero = () => {
               fill
               className="object-cover"
               priority
+              sizes="100vw"
             />
           </motion.div>
           <motion.div 
@@ -212,29 +191,29 @@ const Hero = () => {
         </motion.div>
 
         {/* Content Container - Centered both vertically and horizontally */}
-        <div className="relative z-10 w-full h-full flex flex-col items-center justify-center text-center px-4 md:px-8 lg:px-16 m-0">
+        <div className="relative z-10 w-full h-full flex flex-col items-center justify-center text-center px-4 sm:px-6 md:px-8 lg:px-16 py-8 sm:py-12 md:py-16">
           <AnimatePresence mode="wait">
             <motion.div
               variants={heroVariants}
               initial="hidden"
               animate={isInView ? "visible" : (hasAnimatedIn ? "scrolledOut" : "hidden")}
-              className="space-y-7 md:space-y-10 max-w-4xl mx-auto"
+              className="space-y-4 sm:space-y-6 md:space-y-8 lg:space-y-10 max-w-4xl mx-auto"
             >
               {/* Heading */}
               <motion.h1
                 variants={itemVariants}
                 animate={isInView ? "visible" : (hasAnimatedIn ? "scrolledOut" : "hidden")}
-                className="font-league-spartan text-white text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold drop-shadow-lg min-h-[1.2em] tracking-tight"
+                className="font-league-spartan text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold drop-shadow-lg min-h-[1.2em] tracking-tight px-2 sm:px-4"
                 style={{ lineHeight: 1.1 }}
               >
-                <TypewriterText phrases={phrases} />
+                <AlternatingText phrases={phrases} />
               </motion.h1>
 
               {/* Subheading */}
               <motion.p
                 variants={itemVariants}
                 animate={isInView ? "visible" : (hasAnimatedIn ? "scrolledOut" : "hidden")}
-                className="font-lato text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto drop-shadow-md leading-relaxed"
+                className="font-lato text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto drop-shadow-md leading-relaxed px-2 sm:px-4"
               >
                 When communities unite with technology, problems don&apos;t just get noticed—they get solved. We&apos;re the platform that makes it happen.
                 Janstad connects citizens, expats, and local organizations to solve urban challenges together. Navigate administrative hurdles, amplify your voice in local governance, and build meaningful cross-cultural connections.
@@ -244,14 +223,14 @@ const Hero = () => {
               <motion.div
                 variants={itemVariants}
                 animate={isInView ? "visible" : (hasAnimatedIn ? "scrolledOut" : "hidden")}
-                className="flex flex-col sm:flex-row gap-4 md:gap-5 justify-center items-center mt-7 md:mt-10"
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-5 justify-center items-center mt-6 sm:mt-8 md:mt-10 px-2 sm:px-4"
               >
                 <motion.button
                   variants={buttonVariants}
                   whileHover="hover"
                   whileTap="tap"
                   animate={isInView ? "visible" : (hasAnimatedIn ? "scrolledOut" : "hidden")}
-                  className="font-lato bg-[#E67E22] text-white px-6 py-3 rounded-full text-base font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
+                  className="font-lato bg-[#E67E22] text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
                   aria-label="Start a Poll"
                 >
                   Start a Poll
@@ -261,7 +240,7 @@ const Hero = () => {
                   whileHover="hover"
                   whileTap="tap"
                   animate={isInView ? "visible" : (hasAnimatedIn ? "scrolledOut" : "hidden")}
-                  className="font-lato bg-[#E67E22] text-white px-6 py-3 rounded-full text-base font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
+                  className="font-lato bg-[#E67E22] text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
                   aria-label="Join a Community"
                 >
                   Join a Community
@@ -271,7 +250,7 @@ const Hero = () => {
                   whileHover="hover"
                   whileTap="tap"
                   animate={isInView ? "visible" : (hasAnimatedIn ? "scrolledOut" : "hidden")}
-                  className="font-lato bg-[#E67E22] text-white px-6 py-3 rounded-full text-base font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
+                  className="font-lato bg-[#E67E22] text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95"
                   aria-label="Explore Issues"
                 >
                   Explore Issues

@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from 'next/image';
 import { FaLightbulb, FaHandshake, FaChartLine } from 'react-icons/fa';
+import Link from 'next/link';
 
 const values = [
   {
@@ -58,7 +59,7 @@ const AboutSection = () => {
       initial={{ opacity: 0, y: 60 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="w-full py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 lg:px-16 bg-white"
+      className="w-full py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 lg:px-16 bg-white"
       id="about"
     >
       <div className="max-w-7xl mx-auto">
@@ -132,6 +133,11 @@ const AboutSection = () => {
               <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
                 We provide a digital platform that facilitates meaningful connections, enables collaborative problem-solving, and amplifies community voices in urban development and governance.
               </p>
+            </div>
+            <div className="mt-6">
+              <Link href="/about" className="inline-block font-lato bg-[#E67E22] text-white px-6 py-3 rounded-full text-base font-semibold shadow-lg hover:bg-[#D35400] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E67E22] transform hover:scale-105 active:scale-95">
+                Explore Our Story
+              </Link>
             </div>
           </motion.div>
         </div>

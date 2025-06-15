@@ -84,7 +84,7 @@ export default function FeaturesSection() {
       initial={{ opacity: 0, y: 60 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="w-full py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 lg:px-16 bg-gray-50"
+      className="w-full py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 lg:px-16 bg-gray-50"
       id="features"
     >
       <div className="max-w-7xl mx-auto">

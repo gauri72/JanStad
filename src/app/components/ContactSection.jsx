@@ -37,7 +37,7 @@ export default function ContactSection() {
       initial={{ opacity: 0, y: 60 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="w-full min-h-screen bg-white py-16 px-4 flex flex-col items-center justify-center relative overflow-hidden"
+      className="w-full py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 lg:px-16 bg-white"
       id="contact"
       aria-labelledby="contact-heading"
     >

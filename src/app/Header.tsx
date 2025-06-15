@@ -25,7 +25,7 @@ const Header = () => {
         }`}>
           {/* Logo */}
           <Link href="#hero" className="flex items-center group p-[10px]">
-            <div className="relative w-[250px] h-[250px] transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+            <div className="relative w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] md:w-[250px] md:h-[250px] transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
               <Image
                 src="/images/logo.png"
                 alt="JanStad Logo"

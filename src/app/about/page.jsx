@@ -415,8 +415,66 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Our Team Section */}
+      <section className="w-full py-24 px-4 bg-white">
+        <div className="container mx-auto max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="space-y-16"
+          >
+            {/* Section Header */}
+            <div className="text-center max-w-3xl mx-auto">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 text-emerald-700 font-semibold text-sm tracking-wider mb-6">
+                OUR TEAM
+              </div>
+              <h2 className="text-4xl font-bold text-gray-800 mb-6">Meet Our Team</h2>
+              <p className="text-lg text-gray-600 leading-relaxed">
+                The passionate individuals behind JanStad who are dedicated to making a difference in urban communities.
+              </p>
+            </div>
+
+            {/* Team Members Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Team Member 1 */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="bg-white rounded-xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300"
+              >
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-32 h-32 rounded-full bg-emerald-50 mb-6 flex items-center justify-center">
+                    <span className="text-4xl text-emerald-600 font-bold">MM</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-2">Mayur Muley</h3>
+                  <p className="text-gray-600">Co-Founder & CEO</p>
+                </div>
+              </motion.div>
+
+              {/* Team Member 2 */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="bg-white rounded-xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300"
+              >
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-32 h-32 rounded-full bg-emerald-50 mb-6 flex items-center justify-center">
+                    <span className="text-4xl text-emerald-600 font-bold">SK</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-2">Sanika Kala</h3>
+                  <p className="text-gray-600">Co-Founder & CTO</p>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* FAQs Section */}
-      <section className="w-full min-h-[90vh] py-24 px-4 bg-white">
+      <section className="w-full min-h-[90vh] py-24 px-4 bg-[#1a472a]">
         <div className="container mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 60 }}
@@ -426,10 +484,10 @@ export default function AboutPage() {
           >
             {/* Section Header */}
             <div className="text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-semibold text-sm tracking-wider mb-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-white/90 font-semibold text-sm tracking-wider mb-4">
                 FAQs
               </div>
-              <h2 className="text-4xl font-bold text-gray-800">Frequently Asked Questions</h2>
+              <h2 className="text-4xl font-bold text-white">Frequently Asked Questions</h2>
             </div>
 
             {/* FAQ List */}
@@ -439,12 +497,12 @@ export default function AboutPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className={`rounded-xl p-6 shadow-sm border transition-all duration-300 cursor-pointer ${openFAQ === 1 ? 'bg-white border-emerald-200 shadow-md' : 'bg-gray-50 border-gray-100 hover:shadow-md hover:border-emerald-100'}`}
+                className={`rounded-xl p-6 shadow-sm border transition-all duration-300 cursor-pointer ${openFAQ === 1 ? 'bg-white/10 border-white/20 shadow-md' : 'bg-white/5 border-white/10 hover:shadow-md hover:border-white/20'}`}
                 onClick={() => toggleFAQ(1)}
               >
                 <div className="flex justify-between items-center">
-                  <h3 className={`text-xl font-semibold ${openFAQ === 1 ? 'text-gray-900' : 'text-gray-800'}`}>Q: Is JanStad.com active now?</h3>
-                  <RiArrowDownSLine className={`text-gray-500 text-2xl transform transition-transform duration-300 ${openFAQ === 1 ? 'rotate-180 text-emerald-600' : 'rotate-0'}`} />
+                  <h3 className={`text-xl font-semibold ${openFAQ === 1 ? 'text-white' : 'text-white/90'}`}>Q: Is JanStad.com active now?</h3>
+                  <RiArrowDownSLine className={`text-white/50 text-2xl transform transition-transform duration-300 ${openFAQ === 1 ? 'rotate-180 text-white' : 'rotate-0'}`} />
                 </div>
                 {
                   openFAQ === 1 && (
@@ -452,7 +510,7 @@ export default function AboutPage() {
                       initial={{ opacity: 0, height: 0, marginTop: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
-                      className="text-gray-600 leading-relaxed text-base mt-3"
+                      className="text-white/80 leading-relaxed text-base mt-3"
                     >
                       We are preparing to launch pilot projects and are actively seeking collaboration with local authorities, NGOs, and other stakeholders.
                     </motion.p>
@@ -465,12 +523,12 @@ export default function AboutPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className={`rounded-xl p-6 shadow-sm border transition-all duration-300 cursor-pointer ${openFAQ === 2 ? 'bg-white border-emerald-200 shadow-md' : 'bg-gray-50 border-gray-100 hover:shadow-md hover:border-emerald-100'}`}
+                className={`rounded-xl p-6 shadow-sm border transition-all duration-300 cursor-pointer ${openFAQ === 2 ? 'bg-white/10 border-white/20 shadow-md' : 'bg-white/5 border-white/10 hover:shadow-md hover:border-white/20'}`}
                 onClick={() => toggleFAQ(2)}
               >
                 <div className="flex justify-between items-center">
-                  <h3 className={`text-xl font-semibold ${openFAQ === 2 ? 'text-gray-900' : 'text-gray-800'}`}>Q: How does JanStad.com ensure secure participation?</h3>
-                  <RiArrowDownSLine className={`text-gray-500 text-2xl transform transition-transform duration-300 ${openFAQ === 2 ? 'rotate-180 text-emerald-600' : 'rotate-0'}`} />
+                  <h3 className={`text-xl font-semibold ${openFAQ === 2 ? 'text-white' : 'text-white/90'}`}>Q: How does JanStad.com ensure secure participation?</h3>
+                  <RiArrowDownSLine className={`text-white/50 text-2xl transform transition-transform duration-300 ${openFAQ === 2 ? 'rotate-180 text-white' : 'rotate-0'}`} />
                 </div>
                 {
                   openFAQ === 2 && (
@@ -478,7 +536,7 @@ export default function AboutPage() {
                       initial={{ opacity: 0, height: 0, marginTop: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
-                      className="text-gray-600 leading-relaxed text-base mt-3"
+                      className="text-white/80 leading-relaxed text-base mt-3"
                     >
                       We prioritize data security and are working toward integrating trusted tools like DigiD to ensure secure and verified input.
                     </motion.p>
@@ -491,12 +549,12 @@ export default function AboutPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className={`rounded-xl p-6 shadow-sm border transition-all duration-300 cursor-pointer ${openFAQ === 3 ? 'bg-white border-emerald-200 shadow-md' : 'bg-gray-50 border-gray-100 hover:shadow-md hover:border-emerald-100'}`}
+                className={`rounded-xl p-6 shadow-sm border transition-all duration-300 cursor-pointer ${openFAQ === 3 ? 'bg-white/10 border-white/20 shadow-md' : 'bg-white/5 border-white/10 hover:shadow-md hover:border-white/20'}`}
                 onClick={() => toggleFAQ(3)}
               >
                 <div className="flex justify-between items-center">
-                  <h3 className={`text-xl font-semibold ${openFAQ === 3 ? 'text-gray-900' : 'text-gray-800'}`}>Q: Who can use JanStad.com?</h3>
-                  <RiArrowDownSLine className={`text-gray-500 text-2xl transform transition-transform duration-300 ${openFAQ === 3 ? 'rotate-180 text-emerald-600' : 'rotate-0'}`} />
+                  <h3 className={`text-xl font-semibold ${openFAQ === 3 ? 'text-white' : 'text-white/90'}`}>Q: Who can use JanStad.com?</h3>
+                  <RiArrowDownSLine className={`text-white/50 text-2xl transform transition-transform duration-300 ${openFAQ === 3 ? 'rotate-180 text-white' : 'rotate-0'}`} />
                 </div>
                 {
                   openFAQ === 3 && (
@@ -504,7 +562,7 @@ export default function AboutPage() {
                       initial={{ opacity: 0, height: 0, marginTop: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
-                      className="text-gray-600 leading-relaxed text-base mt-3"
+                      className="text-white/80 leading-relaxed text-base mt-3"
                     >
                       Our platform is open to everyone—local governments, NGOs, companies, activists, and individuals.
                     </motion.p>
